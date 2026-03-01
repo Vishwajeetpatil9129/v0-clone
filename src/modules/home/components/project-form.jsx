@@ -13,6 +13,10 @@ import { cn } from "@/lib/utils";
 import { Button } from '@/components/ui/button';
 import { Form , FormField } from "@/components/ui/form";
 
+import { onInvoke } from '../actions';
+import { inngest } from '@/inngest/client';
+
+
 const formSchema = z.object({
   content: z
     .string()
@@ -94,10 +98,25 @@ const ProjectsForm = () => {
             
         }
     }
+
+    const onInvokeAI = async () => {
+  try {
+    const res = await onInvoke()
+    console.log(res)
+    toast.success("Done")
+  } catch (error) {
+    console.log(error)
+  }
+}
+
   return (
     <div className="space-y-6 w-full">
       {/* Template Grid */}
       
+      <Button onClick={onInvokeAI}>
+        Invoke AI Agent
+      </Button>
+
       <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {PROJECT_TEMPLATES.map((template, index) => (
           <button
