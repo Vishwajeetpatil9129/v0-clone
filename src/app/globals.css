@@ -194,3 +194,10 @@
     @apply bg-background text-foreground;
   }
 }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}

@@ -95,7 +95,7 @@ const ProjectsForm = () => {
         }
     }
   return (
-    <div className="space-y-10 w-full">
+    <div className="space-y-6 w-full">
       {/* Template Grid */}
       
       <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
