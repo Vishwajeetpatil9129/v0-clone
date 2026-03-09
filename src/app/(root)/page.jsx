@@ -17,7 +17,7 @@ const Page = () => {
         />
 
         <h1 className="text-3xl md:text-5xl font-bold tracking-tight"> 
-          Build Something with Knowledge
+          Build Something with Knowledge.
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl"> 
