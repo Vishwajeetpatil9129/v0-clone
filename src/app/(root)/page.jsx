@@ -21,7 +21,7 @@ const Page = () => {
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground max-w-xl"> 
-          Create apps and websites by chatting with AI
+          Create apps and websites by chatting with AI.
         </p>
 
         <div className="w-full max-w-3xl"> 
