@@ -105,7 +105,7 @@ export const codeAgentFunction = inngest.createFunction(
         // 2. createOrUpdateFiles
         createTool({
           name: "createOrUpdateFiles",
-          description: "Create or update files in the sanbox",
+          description: "Create or update files in the sandbox",
           parameters: z.object({
             files: z.array(
               z.object({
