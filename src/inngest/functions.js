@@ -14,7 +14,12 @@ import db from "@/lib/db";
 import { MessageRole, MessageType } from "@prisma/client";
 
 export const codeAgentFunction = inngest.createFunction(
-  { id: "code-agent" },
+  { 
+    id: "code-agent",
+  timeouts: {
+      finish: "10m"   // ← give it 10 minutes, default is too short
+    }
+   },
   { event: "code-agent/run" },
 
   async ({ event, step }) => {
@@ -24,40 +29,40 @@ export const codeAgentFunction = inngest.createFunction(
       return sandbox.sandboxId;
     });
 
-    const previousMessages = await step.run(
-      "get-previous-messages",
-      async()=>{
-        const formattedMessages = [];
+    // const previousMessages = await step.run(
+    //   "get-previous-messages",
+    //   async()=>{
+    //     const formattedMessages = [];
 
-        const messages = await db.message.findMany({
-          where:{
-            projectId:event.data.projectId
-          },
-          orderBy:{
-            createdAt:"desc"
-          }
-        })
+    //     const messages = await db.message.findMany({
+    //       where:{
+    //         projectId:event.data.projectId
+    //       },
+    //       orderBy:{
+    //         createdAt:"desc"
+    //       }
+    //     })
 
-        for(const message of messages){
-          formattedMessages.push({
-            type:"text",
-            role:message.role === "ASSISTANT" ? "assistant" : "user",
-            content:message.content
-          })
-        }
+    //     for(const message of messages){
+    //       formattedMessages.push({
+    //         type:"text",
+    //         role:message.role === "ASSISTANT" ? "assistant" : "user",
+    //         content:message.content
+    //       })
+    //     }
 
-        return formattedMessages
-      }
-    )
+    //     return formattedMessages
+    //   }
+    // )
 
     const state = createState({
       summary:"",
       files:{}
     }
   ,
-  {
-    messages:previousMessages
-  }
+  // {
+  //   messages:previousMessages
+  // }
 )
 
     const codeAgent = createAgent({
@@ -203,55 +208,55 @@ export const codeAgentFunction = inngest.createFunction(
     
     const result = await network.run(event.data.value , {state});
 
-    const fragmentTitleGenerator = createAgent({
-      name:"fragment-title-generator",
-      description:"Generate a title for the fragment",
-      system:FRAGMENT_TITLE_PROMPT,
-      model:gemini({model:"gemini-2.5-flash"})
-    })
+    // const fragmentTitleGenerator = createAgent({
+    //   name:"fragment-title-generator",
+    //   description:"Generate a title for the fragment",
+    //   system:FRAGMENT_TITLE_PROMPT,
+    //   model:gemini({model:"gemini-2.5-flash"})
+    // })
 
-    const responseGenerator = createAgent({
-      name:"response-generator",
-      description:"Generate a response for the fragment",
-      system:RESPONSE_PROMPT,
-      model:gemini
-      ({model:"gemini-2.5-flash"})
-    })
+    // const responseGenerator = createAgent({
+    //   name:"response-generator",
+    //   description:"Generate a response for the fragment",
+    //   system:RESPONSE_PROMPT,
+    //   model:gemini
+    //   ({model:"gemini-2.5-flash"})
+    // })
 
 
-    const {output:fragmentTitleOutput} = await fragmentTitleGenerator.run(result.state.data.summary)
-    const {output:responseOutput} = await responseGenerator.run(
-      result.state.data.summary
-    )
+    // const {output:fragmentTitleOutput} = await fragmentTitleGenerator.run(result.state.data.summary)
+    // const {output:responseOutput} = await responseGenerator.run(
+    //   result.state.data.summary
+    // )
 
-    const generateFragmentTitle = ()=>{
-      if(fragmentTitleOutput[0].type !=="text"){
-        return "Untitled"
-      }
+    // const generateFragmentTitle = ()=>{
+    //   if(fragmentTitleOutput[0].type !=="text"){
+    //     return "Untitled"
+    //   }
 
-      if(Array.isArray(fragmentTitleOutput[0].content)){
-            return fragmentTitleOutput[0].content.map((c) => c).join("");
-      }
-      else{
-        return fragmentTitleOutput[0].content
-      }
-    }
+    //   if(Array.isArray(fragmentTitleOutput[0].content)){
+    //         return fragmentTitleOutput[0].content.map((c) => c).join("");
+    //   }
+    //   else{
+    //     return fragmentTitleOutput[0].content
+    //   }
+    // }
 
-    const generateResponse = ()=>{
-       if (responseOutput[0].type !== "text") {
-        return "Here you go";
-      }
+    // const generateResponse = ()=>{
+    //    if (responseOutput[0].type !== "text") {
+    //     return "Here you go";
+    //   }
 
-      if (Array.isArray(responseOutput[0].content)) {
-        return responseOutput[0].content.map((c) => c).join("");
-      } else {
-        return responseOutput[0].content;
-      }
-    }
+    //   if (Array.isArray(responseOutput[0].content)) {
+    //     return responseOutput[0].content.map((c) => c).join("");
+    //   } else {
+    //     return responseOutput[0].content;
+    //   }
+    // }
 
-    const isError =
-      !result.state.data.summary ||
-      Object.keys(result.state.data.files || {}).length === 0;
+    // const isError =
+    //   !result.state.data.summary ||
+    //   Object.keys(result.state.data.files || {}).length === 0;
 
     const sandboxUrl = await step.run("get-sandbox-url", async () => {
       const sandbox = await Sandbox.connect(sandboxId);
@@ -276,13 +281,15 @@ export const codeAgentFunction = inngest.createFunction(
       return await db.message.create({
         data:{
           projectId:event.data.projectId,
-          content:generateResponse(),
+          // content:generateResponse(),
+          content:result.state.data.summary,
           role:MessageRole.ASSISTANT,
           type:MessageType.RESULT,
           fragments:{
             create:{
               sandboxUrl:sandboxUrl,
-              title:generateFragmentTitle(),
+              // title:generateFragmentTitle(),
+              title:"Untitled",
               files:result.state.data.files
             }
           }
