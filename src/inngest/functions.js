@@ -254,9 +254,9 @@ export const codeAgentFunction = inngest.createFunction(
     //   }
     // }
 
-    // const isError =
-    //   !result.state.data.summary ||
-    //   Object.keys(result.state.data.files || {}).length === 0;
+    const isError =
+      !result.state.data.summary ||
+      Object.keys(result.state.data.files || {}).length === 0;
 
     const sandboxUrl = await step.run("get-sandbox-url", async () => {
       const sandbox = await Sandbox.connect(sandboxId);
