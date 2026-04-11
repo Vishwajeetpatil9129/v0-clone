@@ -63,7 +63,8 @@ const AssistantMessage = ({
     >
       <div className="flex items-center gap-2 pl-2 mb-2">
         <Image
-          alt="V0"
+        
+          alt="Vibe"
           src={"/logo.svg"}
           height={30}
           width={30}
@@ -75,7 +76,6 @@ const AssistantMessage = ({
       </div>
 
       <div className="pl-8.5 flex flex-col gap-y-4">
-        {/* REMOVED Response component - just show plain text for now */}
         <p className="text-sm">{content}</p>
         
         {fragment && type === MessageType.RESULT && (
