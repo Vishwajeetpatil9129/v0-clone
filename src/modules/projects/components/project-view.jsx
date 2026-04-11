@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Code, CrownIcon, EyeIcon } from "lucide-react";
 import ProjectHeader from "./project-header";
-import MessageContainer from "./message-container";
+// import MessageContainer from "./message-container";
 // import FragmentWeb from "./fragment-web";
 // import { FileExplorer } from "./file-explorer";
 
@@ -31,11 +31,11 @@ const ProjectView = ({ projectId }) => {
           <ProjectHeader projectId={projectId} />
 
           {/* TODO: MessageContainer */}
-          <MessageContainer
+          {/* <MessageContainer
             projectId={projectId}
             activeFragment={activeFragment}
             setActiveFragment={setActiveFragment}
-          />
+          /> */}
         </ResizablePanel>
 
         {/* DIVIDER LINE - THIS CREATES THE SPLIT */}

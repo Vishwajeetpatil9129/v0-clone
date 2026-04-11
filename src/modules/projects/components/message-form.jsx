@@ -2,8 +2,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextAreaAutosize from "react-textarea-autosize";
-import { ArrowUpIcon, Loader2Icon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ArrowUpIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import z from "zod";
@@ -12,12 +11,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
-import { onInvoke } from "../actions";
 import { useCreateMessages } from "@/modules/messages/hooks/message";
-import { useStatus } from "@/modules/usage/hooks/usage";
-import { Usage } from "@/modules/usage/components/usage";
-
-// import { onInvoke } from "../actions";
 
 const formSchema = z.object({
   content: z
@@ -26,16 +20,10 @@ const formSchema = z.object({
     .max(1000, "Description is too long"),
 });
 
-
-
 const MessageForm = ({projectId}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const {mutateAsync , isPending} = useCreateMessages(projectId)
-
-  const {data:usage} = useStatus()
-
-  const showUsage = !!usage;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -45,29 +33,18 @@ const MessageForm = ({projectId}) => {
     mode:"onChange"
   });
 
- 
   const onSubmit = async (values) => {
     try {
-      const res = await mutateAsync(values.content)
-   
+      await mutateAsync(values.content)
       toast.success("Message sent successfully")
       form.reset()
-      toast.success("Message Sent Successfully")
     } catch (error) {
        toast.error(error.message || "Failed to send message");
     }
   };
 
-
-  
-
   return (
       <Form {...form}>
-        {
-          showUsage && (
-            <Usage/>
-          )
-        }
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className={cn(
@@ -118,7 +95,6 @@ const MessageForm = ({projectId}) => {
               {
                 isPending ? (<Spinner/>) : (<ArrowUpIcon className="size-4"/>)
               }
-                
             </Button>
          </div>
         </form>

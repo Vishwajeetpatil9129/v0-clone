@@ -7,7 +7,7 @@ import { MessageRole } from "@prisma/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@/components/ui/spinner";
 import MessageCard from "./message-card";
-// import MessageForm from "./message-form";
+import MessageForm from "./message-form";  // ← UNCOMMENTED
 import MessageLoading from "./message-loader";
 
 const MessageContainer = ({ projectId, activeFragment, setActiveFragment }) => {
@@ -21,6 +21,14 @@ const MessageContainer = ({ projectId, activeFragment, setActiveFragment }) => {
     isError,
     error,
   } = useGetMessages(projectId);
+
+  // DEBUG: Log what's happening
+  useEffect(() => {
+    console.log("Messages:", messages);
+    console.log("isPending:", isPending);
+    console.log("isError:", isError);
+    console.log("error:", error);
+  }, [messages, isPending, isError, error]);
 
   useEffect(() => {
     if (projectId) {

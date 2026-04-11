@@ -1,4 +1,3 @@
-import { Response } from "@/components/ai-elements/response";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { MessageRole, MessageType } from "@prisma/client";
@@ -64,8 +63,7 @@ const AssistantMessage = ({
     >
       <div className="flex items-center gap-2 pl-2 mb-2">
         <Image
-        
-          alt="Vibe"
+          alt="V0"
           src={"/logo.svg"}
           height={30}
           width={30}
@@ -77,7 +75,9 @@ const AssistantMessage = ({
       </div>
 
       <div className="pl-8.5 flex flex-col gap-y-4">
-       <Response>{content}</Response>
+        {/* REMOVED Response component - just show plain text for now */}
+        <p className="text-sm">{content}</p>
+        
         {fragment && type === MessageType.RESULT && (
           <FragmentCard
             fragment={fragment}
@@ -118,5 +118,5 @@ const MessageCard = ({
     </div>
   );
 };
- 
+
 export default MessageCard;
