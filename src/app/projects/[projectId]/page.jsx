@@ -6,7 +6,7 @@ const Page = async({params}) => {
     const { projectId } = await params;
 
   return (
-    <ProjectViewView projectId={projectId} />
+    <ProjectView projectId={projectId} />
   );
 };
 
