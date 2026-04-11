@@ -90,7 +90,7 @@ const ProjectView = ({ projectId }) => {
             >
               {activeFragment ? (
                 <>
-                  {/* <FragmentWeb data={activeFragment}/> */}
+                  <FragmentWeb data={activeFragment}/>
                   <div className="flex items-center justify-center h-full">
                     Preview coming soon
                   </div>
