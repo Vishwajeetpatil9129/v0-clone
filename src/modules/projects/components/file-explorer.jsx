@@ -1,3 +1,5 @@
+"use client";
+
 import { CopyCheckIcon, CopyIcon } from "lucide-react";
 import { useState, useMemo, useCallback, Fragment } from "react";
 import { Button } from "@/components/ui/button";
@@ -14,17 +16,18 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  BreadcrumbEllipsis,
 } from "@/components/ui/breadcrumb";
 import { convertFilesToTreeItems } from "@/lib/utils";
 import { TreeView } from "./tree-view";
 import { Hint } from "@/components/ui/hint";
 
 const FileBreadcrumb = ({ filePath }) => {
+  if (!filePath) return null;
+
   const pathSegments = filePath.split("/");
   const maxSegments = 4;
 
-  const renderBreadCrumItems = () => {
+  const renderBreadCrumbItems = () => {
     if (pathSegments.length <= maxSegments) {
       return pathSegments.map((segment, index) => {
         const isLast = index === pathSegments.length - 1;
@@ -35,7 +38,7 @@ const FileBreadcrumb = ({ filePath }) => {
               {isLast ? (
                 <BreadcrumbPage>{segment}</BreadcrumbPage>
               ) : (
-                <span className="text-muted-foreground+">{segment}</span>
+                <span className="text-muted-foreground">{segment}</span>
               )}
             </BreadcrumbItem>
             {!isLast && <BreadcrumbSeparator />}
@@ -43,21 +46,20 @@ const FileBreadcrumb = ({ filePath }) => {
         );
       });
     } else {
-      const firstSegment = pathSegments[0];
-      const lastSegment = pathSegments[pathSegments.length - 1];
-
       return (
         <>
           <BreadcrumbItem>
-            <span className="text-muted-foreground">{firstSegment}</span>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbEllipsis />
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem className="font-medium">
-              {lastSegment}
-            </BreadcrumbItem>
+            <span className="text-muted-foreground">
+              {pathSegments[0]}
+            </span>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>...</BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>
+              {pathSegments[pathSegments.length - 1]}
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </>
       );
@@ -66,7 +68,7 @@ const FileBreadcrumb = ({ filePath }) => {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList>{renderBreadCrumItems()}</BreadcrumbList>
+      <BreadcrumbList>{renderBreadCrumbItems()}</BreadcrumbList>
     </Breadcrumb>
   );
 };
@@ -92,26 +94,38 @@ function getLanguageFromExtension(filename) {
 export const FileExplorer = ({ files }) => {
   const [copied, setCopied] = useState(false);
   const [selectedFile, setSelectedFile] = useState(() => {
-    const fileKeys = Object.keys(files);
+    const fileKeys = Object.keys(files || {});
     return fileKeys.length > 0 ? fileKeys[0] : null;
   });
 
-  const treeData = useMemo(() => {
-    return convertFilesToTreeItems(files);
+  // Handle both file formats
+  const normalizedFiles = useMemo(() => {
+    if (!files) return {};
+
+    return Object.entries(files).reduce((acc, [key, value]) => {
+      acc[key] =
+        typeof value === "string" ? value : value?.content || "";
+      return acc;
+    }, {});
   }, [files]);
+
+  const treeData = useMemo(() => {
+    return convertFilesToTreeItems(normalizedFiles);
+  }, [normalizedFiles]);
 
   const handleFileSelect = useCallback(
     (filePath) => {
-      if (files[filePath]) {
+      if (normalizedFiles[filePath]) {
         setSelectedFile(filePath);
       }
     },
-    [files]
+    [normalizedFiles]
   );
+
   const handleCopy = useCallback(() => {
-    if (selectedFile && files[selectedFile]) {
+    if (selectedFile && normalizedFiles[selectedFile]) {
       navigator.clipboard
-        .writeText(files[selectedFile])
+        .writeText(normalizedFiles[selectedFile])
         .then(() => {
           setCopied(true);
           setTimeout(() => setCopied(false), 2000);
@@ -120,17 +134,22 @@ export const FileExplorer = ({ files }) => {
           console.error("Failed to copy:", error);
         });
     }
-  }, [selectedFile, files]);
+  }, [selectedFile, normalizedFiles]);
 
   return (
-    <ResizablePanelGroup direction="horizontal" className="h-full">
+    <ResizablePanelGroup
+      direction="horizontal"
+      className="h-full w-full"
+      style={{ display: "flex" }}
+    >
+      {/* LEFT PANEL: FILE TREE */}
       <ResizablePanel
-        defaultSize={25}
+        defaultSize={30}
         minSize={20}
-        maxSize={40}
-        className="bg-sidebar"
+        maxSize={50}
+        className="flex flex-col overflow-hidden"
       >
-        <div className="h-full overflow-auto">
+        <div className="h-full w-full overflow-auto flex-1">
           <TreeView
             data={treeData}
             value={selectedFile}
@@ -138,18 +157,30 @@ export const FileExplorer = ({ files }) => {
           />
         </div>
       </ResizablePanel>
-      <ResizableHandle className="w-1.5 hover:bg-primary/20 transition-colors" />
 
-      <ResizablePanel defaultSize={75} minSize={40}>
-        {selectedFile && files[selectedFile] ? (
-          <div className="h-full w-full flex flex-col">
-            <div className="border-b bg-sidebar/50 px-4 py-2 flex justify-between items-center gap-x-2">
+      {/* DIVIDER - Make it visible */}
+      <ResizableHandle 
+        className="w-1 hover:bg-primary/50 transition-colors bg-border"
+        withHandle
+      />
+
+      {/* RIGHT PANEL: CODE VIEW */}
+      <ResizablePanel
+        defaultSize={70}
+        minSize={50}
+        maxSize={80}
+        className="flex flex-col overflow-hidden"
+      >
+        {selectedFile && normalizedFiles[selectedFile] ? (
+          <>
+            {/* HEADER: BREADCRUMB + COPY BUTTON */}
+            <div className="flex-shrink-0 border-b bg-sidebar/50 px-4 py-3 flex justify-between items-center gap-x-2">
               <FileBreadcrumb filePath={selectedFile} />
               <Hint label="Copy to clipboard" side="bottom" sideOffset={4}>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 hover:bg-background/80"
+                  className="h-8 w-8 hover:bg-background/80 flex-shrink-0"
                   onClick={handleCopy}
                 >
                   {copied ? (
@@ -160,15 +191,17 @@ export const FileExplorer = ({ files }) => {
                 </Button>
               </Hint>
             </div>
-            <div className="flex-1 overflow-auto relative">
+
+            {/* CODE VIEW */}
+            <div className="flex-1 overflow-auto w-full">
               <CodeView
-                code={files[selectedFile]}
+                code={normalizedFiles[selectedFile]}
                 lang={getLanguageFromExtension(selectedFile)}
               />
             </div>
-          </div>
+          </>
         ) : (
-          <div className="flex h-full items-center justify-center text-muted-foreground">
+          <div className="flex h-full w-full items-center justify-center text-muted-foreground">
             <p className="text-sm">Select a file to view its content</p>
           </div>
         )}
