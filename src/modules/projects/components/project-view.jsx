@@ -11,9 +11,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Code, CrownIcon, EyeIcon } from "lucide-react";
 import ProjectHeader from "./project-header";
-import MessageContainer from "./message-container";  // ← UNCOMMENTED
-// import FragmentWeb from "./fragment-web";
-// import { FileExplorer } from "./file-explorer";
+import MessageContainer from "./message-container";
+import FragmentWeb from "./fragment-web";
+import { FileExplorer } from "./file-explorer";
 
 const ProjectView = ({ projectId }) => {
   const [activeFragment, setActiveFragment] = useState(null);
@@ -109,7 +109,7 @@ const ProjectView = ({ projectId }) => {
             >
               {activeFragment?.files ? (
                 <>
-                  {/* <FileExplorer files={activeFragment.files}/> */}
+                  <FileExplorer files={activeFragment.files}/>
                   <div className="flex items-center justify-center h-full">
                     Code viewer coming soon
                   </div>

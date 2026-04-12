@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ExternalLink, RefreshCcw } from "lucide-react";
-import { Button } from "@components/ui/button";
-import { Hint } from "@components/ui/hint";
+import { Button } from "@/components/ui/button";
+import { Hint } from "@/components/ui/hint";
 
 const FragmentWeb = ({ data }) => {
   const [fragmentKey, setFragmentKey] = useState(0);
