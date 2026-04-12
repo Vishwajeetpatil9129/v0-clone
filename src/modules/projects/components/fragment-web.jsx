@@ -51,7 +51,7 @@ const FragmentWeb = ({ data }) => {
             onClick={() => {
               if (!data.sandboxUrl) return;
 
-              window.open(data.sandboxUrl, "_blank");
+              window.open(data.sandboxUrl, "_blank"); // "_blank"	:- Open in NEW tab (not current tab)
             }}
           >
             <ExternalLink />
