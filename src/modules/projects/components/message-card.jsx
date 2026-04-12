@@ -77,7 +77,7 @@ const AssistantMessage = ({
       </div>
 
       <div className="pl-8.5 flex flex-col gap-y-4">
-        {/* <Response>{content}</Response> */}
+        <Response>{content}</Response>
         
         {fragment && type === MessageType.RESULT && (
           <FragmentCard
