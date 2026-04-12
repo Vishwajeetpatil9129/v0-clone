@@ -1,3 +1,4 @@
+import { Response } from "@/components/ai-elements/response";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { MessageRole, MessageType } from "@prisma/client";
@@ -76,7 +77,7 @@ const AssistantMessage = ({
       </div>
 
       <div className="pl-8.5 flex flex-col gap-y-4">
-        <p className="text-sm">{content}</p>
+        {/* <Response>{content}</Response> */}
         
         {fragment && type === MessageType.RESULT && (
           <FragmentCard
