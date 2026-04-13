@@ -21,22 +21,22 @@ export const createMessages = async (value, projectId) => {
   if (!project) throw new Error("Project not found");
 
 
-//   try {
-//     await consumeCredits();
-//   } catch (error) {
-//       if(error instanceof Error) {
-//       throw new Error({
-//       code:"BAD_REQUEST",
-//         message:"Something went wrong"
-//       })
-//     }
-//     else{
-//       throw new Error({
-//         code:"TOO_MANY_REQUESTS",
-//         message:"Too many requests"
-//       })
-//     }
-//   }
+  try {
+    await consumeCredits();
+  } catch (error) {
+      if(error instanceof Error) {
+      throw new Error({
+      code:"BAD_REQUEST",
+        message:"Something went wrong"
+      })
+    }
+    else{
+      throw new Error({
+        code:"TOO_MANY_REQUESTS",
+        message:"Too many requests"
+      })
+    }
+  }
 
   const newMessage = await db.message.create({
     data: {

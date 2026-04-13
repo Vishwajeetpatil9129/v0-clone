@@ -11,6 +11,23 @@ export const createProject = async (value)=>{
 
   if(!user) throw new Error("Unauthorized");
 
+  try {
+    await consumeCredits();
+  } catch (error) {
+      if(error instanceof Error) {
+      throw new Error({
+      code:"BAD_REQUEST",
+        message:"Something went wrong"
+      })
+    }
+    else{
+      throw new Error({
+        code:"TOO_MANY_REQUESTS",
+        message:"Too many requests"
+      })
+    }
+  }
+
   const newProject = await db.project.create({
     data:{
       name:generateSlug(2 , {format:"kebab"}),
