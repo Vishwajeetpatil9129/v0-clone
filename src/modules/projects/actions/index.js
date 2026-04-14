@@ -4,7 +4,8 @@ import { inngest } from "@/inngest/client";
 import db from "@/lib/db";
 import { getCurrentUser } from "@/modules/auth/actions";
 import { MessageRole, MessageType } from "@prisma/client";
-import { generateSlug } from "random-word-slugs"; // random name for the project
+import { generateSlug } from "random-word-slugs";
+import { consumeCredits } from "@/lib/usage"; 
 
 export const createProject = async (value)=>{
   const user = await getCurrentUser();
@@ -14,18 +15,11 @@ export const createProject = async (value)=>{
   try {
     await consumeCredits();
   } catch (error) {
-      if(error instanceof Error) {
-      throw new Error({
-      code:"BAD_REQUEST",
-        message:"Something went wrong"
-      })
-    }
-    else{
-      throw new Error({
-        code:"TOO_MANY_REQUESTS",
-        message:"Too many requests"
-      })
-    }
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : "Something went wrong";
+    
+    throw new Error(errorMessage);
   }
 
   const newProject = await db.project.create({
@@ -51,7 +45,7 @@ export const createProject = async (value)=>{
   })
 
   return newProject;
-} 
+}
 
 export const getProjects = async ()=>{
   const user = await getCurrentUser();
