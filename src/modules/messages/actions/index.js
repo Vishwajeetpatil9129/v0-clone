@@ -4,7 +4,7 @@ import { MessageRole, MessageType } from "@prisma/client";
 import db from "@/lib/db";
 import { inngest } from "@/inngest/client";
 import { getCurrentUser } from "@/modules/auth/actions";
-// import { consumeCredits } from "@/lib/usage";
+import { consumeCredits } from "@/lib/usage";
 
 export const createMessages = async (value, projectId) => {
   const user = await getCurrentUser();
@@ -20,22 +20,14 @@ export const createMessages = async (value, projectId) => {
 
   if (!project) throw new Error("Project not found");
 
-
   try {
     await consumeCredits();
   } catch (error) {
-      if(error instanceof Error) {
-      throw new Error({
-      code:"BAD_REQUEST",
-        message:"Something went wrong"
-      })
-    }
-    else{
-      throw new Error({
-        code:"TOO_MANY_REQUESTS",
-        message:"Too many requests"
-      })
-    }
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : "Insufficient credits or rate limited";
+    
+    throw new Error(errorMessage);
   }
 
   const newMessage = await db.message.create({
@@ -59,30 +51,48 @@ export const createMessages = async (value, projectId) => {
 };
 
 export const getMessages = async (projectId) => {
-  const user = await getCurrentUser();
+  try {
+    console.log("getMessages called with projectId:", projectId);
 
-  if (!user) throw new Error("Unauthorized");
+    const user = await getCurrentUser();
+    console.log("Current user:", user?.id);
 
-  const project = await db.project.findUnique({
-    where: {
-      id: projectId,
-      userId: user.id,
-    },
-  });
-
-  if (!project) throw new Error("Project not found or unauthorized");
-
-  const messages = await db.message.findMany({
-    where:{
-        projectId
-    },
-    orderBy:{
-        updatedAt:"asc"
-    },
-    include:{
-        fragments:true
+    if (!user) {
+      console.error("No user found");
+      throw new Error("Unauthorized");
     }
-  })
 
-  return messages;
+    const project = await db.project.findUnique({
+      where: {
+        id: projectId,
+        userId: user.id,
+      },
+    });
+
+    console.log("Project found:", project?.id);
+
+    if (!project) {
+      console.error("Project not found:", projectId);
+      throw new Error("Project not found or unauthorized");
+    }
+
+    const messages = await db.message.findMany({
+      where: {
+        projectId: projectId,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+      include: {
+        fragments: true,
+      },
+    });
+
+    console.log("Messages fetched:", messages.length, "messages");
+
+    return messages;
+  } catch (error) {
+    console.error("getMessages FATAL ERROR:", error);
+    throw error;
+  }
 };
