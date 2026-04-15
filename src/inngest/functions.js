@@ -31,40 +31,40 @@ export const codeAgentFunction = inngest.createFunction(
       return sandbox.sandboxId;
     });
 
-    // const previousMessages = await step.run(
-    //   "get-previous-messages",
-    //   async()=>{
-    //     const formattedMessages = [];
+    const previousMessages = await step.run(
+      "get-previous-messages",
+      async()=>{
+        const formattedMessages = [];
 
-    //     const messages = await db.message.findMany({
-    //       where:{
-    //         projectId:event.data.projectId
-    //       },
-    //       orderBy:{
-    //         createdAt:"desc"
-    //       }
-    //     })
+        const messages = await db.message.findMany({
+          where:{
+            projectId:event.data.projectId
+          },
+          orderBy:{
+            createdAt:"desc"
+          }
+        })
 
-    //     for(const message of messages){
-    //       formattedMessages.push({
-    //         type:"text",
-    //         role:message.role === "ASSISTANT" ? "assistant" : "user",
-    //         content:message.content
-    //       })
-    //     }
+        for(const message of messages){
+          formattedMessages.push({
+            type:"text",
+            role:message.role === "ASSISTANT" ? "assistant" : "user",
+            content:message.content
+          })
+        }
 
-    //     return formattedMessages
-    //   }
-    // )
+        return formattedMessages
+      }
+    )
 
     const state = createState({
       summary:"",
       files:{}
     }
   ,
-  // {
-  //   messages:previousMessages
-  // }
+  {
+    messages:previousMessages
+  }
 )
 
     const codeAgent = createAgent({
