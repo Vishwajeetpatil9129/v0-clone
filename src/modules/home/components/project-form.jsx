@@ -190,7 +190,7 @@ const ProjectsForm = () => {
               {
                 isPending ? (<Spinner/>) : (<ArrowUpIcon className="size-4"/>)
               }
-                <ArrowUpIcon className="size-4"/>
+                {/* <ArrowUpIcon className="size-4"/> */}
             </Button>
          </div>
         </form>
