@@ -14,13 +14,13 @@ import db from "@/lib/db";
 import { MessageRole, MessageType } from "@prisma/client";
 
 export const codeAgentFunction = inngest.createFunction(
-  { 
+   { 
     id: "code-agent",
-  timeouts: {
+    timeouts: {
       finish: "10m"
-    }
-   },
-  { event: "code-agent/run" },
+    },
+    triggers: [{ event: "code-agent/run" }]
+  },
 
   async ({ event, step }) => {
     // Step-1
