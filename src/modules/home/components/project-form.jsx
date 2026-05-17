@@ -94,7 +94,6 @@ const ProjectsForm = () => {
     const onSubmit = async(values) => {
         try{
             const res = await mutateAsync(values.content)
-            await onInvokeAI(values.content, projectId)
             router.push(`/projects/${res.id}`)
             toast.success("Project created Successfully")
             form.reset()
