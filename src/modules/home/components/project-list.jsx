@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { useGetProjects } from "@/modules/projects/hooks/project";
+import { useGetProjects, useDeleteProject } from "@/modules/projects/hooks/project";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Carousel,
@@ -11,18 +12,30 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { FolderKanban, Calendar, ArrowRight } from "lucide-react";
+import { FolderKanban, Calendar, ArrowRight, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const ProjectList = () => {
     const { data: projects, isPending } = useGetProjects();
+    const { mutateAsync: deleteProject } = useDeleteProject();
+
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric", 
     });
+  };
+
+  const handleDelete = async (event, projectId) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const confirmed = window.confirm("Delete this project? This cannot be undone.");
+    if (!confirmed) return;
+
+    await deleteProject(projectId);
   };
 
   if (isPending) {
@@ -59,7 +72,19 @@ const ProjectList = () => {
                   <div className="p-2.5 bg-emerald-500/10 rounded-lg group-hover:bg-emerald-500/20 transition-colors">
                     <FolderKanban className="w-5 h-5 text-emerald-500" />
                   </div>
-                  <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
+                  <div className="flex items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-zinc-400 hover:text-red-400 hover:bg-red-500/10"
+                      onClick={(event) => handleDelete(event, project.id)}
+                      aria-label="Delete project"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                    <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
+                  </div>
                 </div>
                 <CardTitle className="text-lg text-zinc-100 group-hover:text-emerald-400 transition-colors line-clamp-1">
                   {project.name}
@@ -94,7 +119,19 @@ const ProjectList = () => {
                         <div className="p-2.5 bg-emerald-500/10 rounded-lg group-hover:bg-emerald-500/20 transition-colors">
                           <FolderKanban className="w-5 h-5 text-emerald-500" />
                         </div>
-                        <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
+                        <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-zinc-400 hover:text-red-400 hover:bg-red-500/10"
+                            onClick={(event) => handleDelete(event, project.id)}
+                            aria-label="Delete project"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                          <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
+                        </div>
                       </div>
                       <CardTitle className="text-lg text-zinc-100 group-hover:text-emerald-400 transition-colors line-clamp-1">
                         {project.name}

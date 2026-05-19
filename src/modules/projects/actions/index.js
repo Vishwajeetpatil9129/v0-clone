@@ -79,3 +79,21 @@ export const getProjectById = async (projectId) => {
 
   return project;
 };
+
+export const deleteProject = async (projectId) => {
+  const user = await getCurrentUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const result = await db.project.deleteMany({
+    where: {
+      id: projectId,
+      userId: user.id,
+    },
+  });
+
+  if (result.count === 0) {
+    throw new Error("Project not found");
+  }
+
+  return { id: projectId };
+};
