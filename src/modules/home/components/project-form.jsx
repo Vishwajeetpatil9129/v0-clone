@@ -24,52 +24,52 @@ const formSchema = z.object({
 
 const PROJECT_TEMPLATES = [
   {
-    emoji: "🎬",
-    title: "Build a Netflix clone",
+    emoji: "🌐",
+    title: "Build a landing page",
     prompt:
-      "Build a Netflix-style homepage with a hero banner (use a nice, dark-mode compatible gradient here), movie sections, responsive cards, and a modal for viewing details using mock data and local state. Use dark mode.",
+      "Build a modern SaaS landing page with a hero section (headline, subheadline, CTA button), a features section with 3 icon cards, a testimonials row, and a footer. Use a clean gradient background, smooth scroll, and dark mode.",
   },
   {
-    emoji: "📦",
-    title: "Build an admin dashboard",
+    emoji: "🧮",
+    title: "Build a glassmorphism calculator",
     prompt:
-      "Create an admin dashboard with a sidebar, stat cards, a chart placeholder, and a basic table with filter and pagination using local state. Use clear visual grouping and balance in your design for a modern, professional look.",
+      "Build a fully functional calculator with a glass-effect UI — frosted background, soft blur, rounded buttons with hover glow effects. Support basic arithmetic, keyboard input, and a clear/backspace button. Use a dark gradient background behind the glass panel.",
   },
   {
-    emoji: "📋",
-    title: "Build a kanban board",
+    emoji: "✅",
+    title: "Build a todo list",
     prompt:
-      "Build a kanban board with drag-and-drop using react-beautiful-dnd and support for adding and removing tasks with local state. Use consistent spacing, column widths, and hover effects for a polished UI.",
+      "Build a clean todo list app with the ability to add, complete, and delete tasks. Include filter tabs (All, Active, Completed), a task counter, and smooth fade animations on add/remove. Use local state and a minimal, modern card-based layout.",
   },
   {
-    emoji: "🗂️",
-    title: "Build a file manager",
+    emoji: "⏱️",
+    title: "Build a Pomodoro timer",
     prompt:
-      "Build a file manager with folder list, file grid, and options to rename or delete items using mock data and local state. Focus on spacing, clear icons, and visual distinction between folders and files.",
+      "Build a Pomodoro productivity timer with Work (25 min), Short Break (5 min), and Long Break (15 min) modes. Include a circular countdown ring, start/pause/reset controls, and a session counter. Use a calm color palette with smooth mode transitions.",
   },
   {
-    emoji: "📺",
-    title: "Build a YouTube clone",
+    emoji: "🌤️",
+    title: "Build a weather card",
     prompt:
-      "Build a YouTube-style homepage with mock video thumbnails, a category sidebar, and a modal preview with title and description using local state. Ensure clean alignment and a well-organized grid layout.",
+      "Build a weather dashboard UI with mock data showing current temperature, weather condition icon, humidity, wind speed, and a 5-day forecast row. Use a glassmorphism card design with a sky gradient background that changes based on the weather condition (sunny, rainy, cloudy).",
   },
   {
-    emoji: "🛍️",
-    title: "Build a store page",
+    emoji: "💸",
+    title: "Build an expense tracker",
     prompt:
-      "Build a store page with category filters, a product grid, and local cart logic to add and remove items. Focus on clear typography, spacing, and button states for a great e-commerce UI.",
+      "Build a personal expense tracker where users can add expenses with a name, amount, and category (Food, Travel, Shopping, etc). Show a summary card with total spent, a category breakdown with progress bars, and a scrollable transaction list. Use local state and a clean minimal design.",
   },
   {
-    emoji: "🏡",
-    title: "Build an Airbnb clone",
+    emoji: "🎨",
+    title: "Build a color palette generator",
     prompt:
-      "Build an Airbnb-style listings grid with mock data, filter sidebar, and a modal with property details using local state. Use card spacing, soft shadows, and clean layout for a welcoming design.",
+      "Build a color palette generator that shows 5 color swatches. Users can lock individual colors and click Generate to randomize the unlocked ones. Show the hex code on each swatch with a copy-to-clipboard button. Use a clean, minimal layout with smooth color transition animations.",
   },
   {
-    emoji: "🎵",
-    title: "Build a Spotify clone",
+    emoji: "📝",
+    title: "Build a markdown previewer",
     prompt:
-      "Build a Spotify-style music player with a sidebar for playlists, a main area for song details, and playback controls. Use local state for managing playback and song selection. Prioritize layout balance and intuitive control placement for a smooth user experience. Use dark mode.",
+      "Build a split-pane markdown editor and live previewer. Left pane is a textarea for writing markdown, right pane renders the formatted output in real time. Include a toolbar with buttons for Bold, Italic, Heading, and Code. Use a dark editor theme with a clean light preview pane.",
   },
 ];
 
