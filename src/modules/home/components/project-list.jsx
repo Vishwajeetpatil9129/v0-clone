@@ -65,11 +65,11 @@ const ProjectList = () => {
           <Link href={`/projects/${project.id}`} key={project.id}>
             <Card
               key={project.id}
-              className="group hover:shadow-xl transition-all duration-300 border-zinc-800/50 hover:border-emerald-500/50 cursor-pointer bg-zinc-900/30 backdrop-blur-sm overflow-hidden"
+              className="group relative overflow-hidden hover:shadow-md transition-all duration-200 border border-border hover:border-primary/40 cursor-pointer bg-card"
             >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="p-2.5 bg-emerald-500/10 rounded-lg group-hover:bg-emerald-500/20 transition-colors">
+                  <div className="p-2.5 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                     <FolderKanban className="w-5 h-5 text-emerald-500" />
                   </div>
                   <div className="flex items-center gap-2">
@@ -77,25 +77,26 @@ const ProjectList = () => {
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-zinc-400 hover:text-red-400 hover:bg-red-500/10"
+                      className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                       onClick={(event) => handleDelete(event, project.id)}
                       aria-label="Delete project"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
-                    <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="w-4 h-4 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>
-                <CardTitle className="text-lg text-zinc-100 group-hover:text-emerald-400 transition-colors line-clamp-1">
+                <CardTitle className="text-lg text-foreground group-hover:text-primary transition-colors line-clamp-1">
                   {project.name}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center text-sm text-zinc-400">
+                <div className="flex items-center text-sm text-muted-foreground">
                   <Calendar className="w-3.5 h-3.5 mr-2" />
                   <span>{formatDate(project.createdAt)}</span>
                 </div>
               </CardContent>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
             </Card>
           </Link>
         ))}
@@ -113,10 +114,10 @@ const ProjectList = () => {
             {projects.map((project) => (
               <Link href={`/projects/${project.id}`} key={project.id}>
                 <CarouselItem key={project.id} className="pl-4 md:basis-1/2">
-                  <Card className="group hover:shadow-xl transition-all duration-300 border-zinc-800/50 hover:border-emerald-500/50 cursor-pointer bg-zinc-900/30 backdrop-blur-sm">
+                  <Card className="group relative overflow-hidden hover:shadow-md transition-all duration-200 border border-border hover:border-primary/40 cursor-pointer bg-card">
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between mb-3">
-                        <div className="p-2.5 bg-emerald-500/10 rounded-lg group-hover:bg-emerald-500/20 transition-colors">
+                        <div className="p-2.5 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                           <FolderKanban className="w-5 h-5 text-emerald-500" />
                         </div>
                         <div className="flex items-center gap-2">
@@ -124,32 +125,33 @@ const ProjectList = () => {
                             type="button"
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 text-zinc-400 hover:text-red-400 hover:bg-red-500/10"
+                            className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                             onClick={(event) => handleDelete(event, project.id)}
                             aria-label="Delete project"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
-                          <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
+                          <ArrowRight className="w-4 h-4 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                         </div>
                       </div>
-                      <CardTitle className="text-lg text-zinc-100 group-hover:text-emerald-400 transition-colors line-clamp-1">
+                      <CardTitle className="text-lg text-foreground group-hover:text-primary transition-colors line-clamp-1">
                         {project.name}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex items-center text-sm text-zinc-400">
+                      <div className="flex items-center text-sm text-muted-foreground">
                         <Calendar className="w-3.5 h-3.5 mr-2" />
                         <span>{formatDate(project.createdAt)}</span>
                       </div>
                     </CardContent>
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                   </Card>
                 </CarouselItem>
               </Link>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100" />
-          <CarouselNext className="border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100" />
+          <CarouselPrevious className="border-border bg-background hover:bg-accent text-muted-foreground hover:text-foreground" />
+          <CarouselNext className="border-border bg-background hover:bg-accent text-muted-foreground hover:text-foreground" />
         </Carousel>
       </div>
     </div>
