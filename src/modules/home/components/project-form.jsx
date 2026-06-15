@@ -26,50 +26,42 @@ const PROJECT_TEMPLATES = [
   {
     emoji: "🌐",
     title: "Build a landing page",
-    prompt:
-      "Build a modern SaaS landing page with a hero section (headline, subheadline, CTA button), a features section with 3 icon cards, a testimonials row, and a footer. Use a clean gradient background, smooth scroll, and dark mode.",
+    prompt: "SaaS landing page with hero section, 3 feature cards, testimonials, and footer. Clean gradient background with dark mode support.",
   },
   {
     emoji: "🧮",
     title: "Build a glassmorphism calculator",
-    prompt:
-      "Build a fully functional calculator with a glass-effect UI — frosted background, soft blur, rounded buttons with hover glow effects. Support basic arithmetic, keyboard input, and a clear/backspace button. Use a dark gradient background behind the glass panel.",
+    prompt: "Calculator with glassmorphism UI — frosted blur, rounded buttons, hover glow. Support basic arithmetic and keyboard input.",
   },
   {
     emoji: "✅",
     title: "Build a todo list",
-    prompt:
-      "Build a clean todo list app with the ability to add, complete, and delete tasks. Include filter tabs (All, Active, Completed), a task counter, and smooth fade animations on add/remove. Use local state and a minimal, modern card-based layout.",
+    prompt: "Todo app with add, complete, and delete. All / Active / Completed filter tabs, fade animations, minimal card layout.",
   },
   {
     emoji: "⏱️",
     title: "Build a Pomodoro timer",
-    prompt:
-      "Build a Pomodoro productivity timer with Work (25 min), Short Break (5 min), and Long Break (15 min) modes. Include a circular countdown ring, start/pause/reset controls, and a session counter. Use a calm color palette with smooth mode transitions.",
+    prompt: "Pomodoro timer with Work, Short Break, Long Break modes. Circular countdown ring, start/pause/reset controls, session counter.",
   },
   {
     emoji: "🌤️",
     title: "Build a weather card",
-    prompt:
-      "Build a weather dashboard UI with mock data showing current temperature, weather condition icon, humidity, wind speed, and a 5-day forecast row. Use a glassmorphism card design with a sky gradient background that changes based on the weather condition (sunny, rainy, cloudy).",
+    prompt: "Weather UI with mock data — temperature, condition, humidity, wind, 5-day forecast. Glassmorphism card with dynamic sky gradient.",
   },
   {
     emoji: "💸",
     title: "Build an expense tracker",
-    prompt:
-      "Build a personal expense tracker where users can add expenses with a name, amount, and category (Food, Travel, Shopping, etc). Show a summary card with total spent, a category breakdown with progress bars, and a scrollable transaction list. Use local state and a clean minimal design.",
+    prompt: "Expense tracker with name, amount, and category input. Total spent summary, category progress bars, scrollable transaction list.",
   },
   {
     emoji: "🎨",
     title: "Build a color palette generator",
-    prompt:
-      "Build a color palette generator that shows 5 color swatches. Users can lock individual colors and click Generate to randomize the unlocked ones. Show the hex code on each swatch with a copy-to-clipboard button. Use a clean, minimal layout with smooth color transition animations.",
+    prompt: "5-swatch palette generator. Lock individual colors, randomize the rest, copy hex codes. Smooth color transition animations.",
   },
   {
     emoji: "📝",
     title: "Build a markdown previewer",
-    prompt:
-      "Build a split-pane markdown editor and live previewer. Left pane is a textarea for writing markdown, right pane renders the formatted output in real time. Include a toolbar with buttons for Bold, Italic, Heading, and Code. Use a dark editor theme with a clean light preview pane.",
+    prompt: "Split-pane markdown editor with live preview. Bold, Italic, Heading, Code toolbar. Dark editor theme, clean light preview pane.",
   },
 ];
 
@@ -94,7 +86,6 @@ const ProjectsForm = () => {
     const onSubmit = async(values) => {
         try{
             const res = await mutateAsync(values.content)
-            await onInvokeAI(values.content, projectId)
             router.push(`/projects/${res.id}`)
             toast.success("Project created Successfully")
             form.reset()
