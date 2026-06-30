@@ -2,7 +2,6 @@ import React from 'react'
 import Image from 'next/image'
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import ProjectsForm from '@/modules/home/components/project-form'
-import ProjectList from '@/modules/home/components/project-list'
 import LandingPage from '@/modules/home/components/landing-page'
 
 const Page = () => {
@@ -13,9 +12,9 @@ const Page = () => {
         <LandingPage />
       </SignedOut>
 
-
+      {/* Authenticated users see the existing dashboard */}
       <SignedIn>
-        <div className="min-h-screen flex items-start justify-center px-4"> 
+        <div className="h-[calc(100vh-5rem)] flex items-center justify-center px-4">
           <div className="max-w-5xl w-full flex flex-col items-center text-center gap-5"> 
             <Image
               src={"/logo.svg"}
@@ -33,7 +32,6 @@ const Page = () => {
             <div className="w-full max-w-3xl"> 
               <ProjectsForm/>
             </div>
-            <ProjectList/>
           </div>
         </div>
       </SignedIn>
