@@ -22,6 +22,7 @@ import {
   Twitter,
 } from "lucide-react";
 
+// Intersection Observer Hook
 function useInView(options = {}) {
   const ref = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -41,30 +42,14 @@ function useInView(options = {}) {
   return [ref, isInView];
 }
 
-// Hero Section
+// SECTION: Hero
 function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center px-4 pt-24 pb-16 overflow-hidden">
-
       <div className="absolute inset-0 -z-10">
-
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-emerald-500/10 dark:bg-emerald-500/8 rounded-full blur-[120px]" />
         <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-emerald-400/8 dark:bg-emerald-400/5 rounded-full blur-[100px] animate-float" />
         <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-teal-500/8 dark:bg-teal-500/5 rounded-full blur-[80px] animate-float-delay" />
-
-
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 bg-emerald-400/40 dark:bg-emerald-400/30 rounded-full"
-            style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
-              animation: `particle-float-${(i % 2) + 1} ${8 + i * 2}s ease-in-out infinite`,
-              animationDelay: `${i * 0.8}s`,
-            }}
-          />
-        ))}
       </div>
 
 
@@ -191,7 +176,7 @@ function HeroSection() {
   );
 }
 
-// Tech Bar
+// SECTION: Tech Bar
 function TechBar() {
   const [ref, isInView] = useInView();
   const techs = [
@@ -232,7 +217,7 @@ function TechBar() {
   );
 }
 
-// Features
+// SECTION: Features
 function FeaturesSection() {
   const [ref, isInView] = useInView();
 
@@ -325,7 +310,7 @@ function FeaturesSection() {
   );
 }
 
-// How It Works
+// SECTION: How It Works
 function HowItWorksSection() {
   const [ref, isInView] = useInView();
 
@@ -364,7 +349,6 @@ function HowItWorksSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-
           <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-px bg-gradient-to-r from-emerald-500/30 via-emerald-500/50 to-emerald-500/30" />
 
           {steps.map((step, i) => (
@@ -392,7 +376,7 @@ function HowItWorksSection() {
   );
 }
 
-// Demo Preview
+// SECTION: Demo Preview
 function DemoSection() {
   const [ref, isInView] = useInView();
 
@@ -510,7 +494,7 @@ function DemoSection() {
   );
 }
 
-// Pricing CTA
+// SECTION: Pricing CTA
 function PricingCTA() {
   const [ref, isInView] = useInView();
 
@@ -551,13 +535,13 @@ function PricingCTA() {
   );
 }
 
-// Footer 
+// SECTION: Footer
 function Footer() {
   return (
     <footer className="border-t border-border/30 dark:border-zinc-800/40 pt-16 pb-8 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
+
           <div className="md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
               <Image src="/logo.svg" width={28} height={28} alt="Vibe" className="invert dark:invert-0" />
@@ -644,7 +628,7 @@ function Footer() {
   );
 }
 
-
+// MAIN COMPONENT
 export default function LandingPage() {
   return (
     <div className="w-full">

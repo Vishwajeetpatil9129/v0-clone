@@ -12,6 +12,7 @@ import {
 } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -38,7 +39,7 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-5xl mx-auto w-full flex justify-between items-center">
-
+        {/* Logo */}
         <Link href={"/"} className="flex items-center gap-2.5">
           <Image
             src={"/logo.svg"}
@@ -50,7 +51,7 @@ const Navbar = () => {
           <span className="font-bold text-lg hidden sm:inline">Vibe</span>
         </Link>
 
-
+        {/* Desktop Nav Links (visible to signed-out users) */}
         <SignedOut>
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
@@ -65,10 +66,12 @@ const Navbar = () => {
           </div>
         </SignedOut>
 
-
+        {/* Right side */}
         <div className="flex items-center gap-3">
+          <ThemeToggle />
+          
           <SignedOut>
-
+            {/* Mobile hamburger */}
             <button
               className="md:hidden p-2 rounded-lg hover:bg-accent/50 transition-colors text-foreground cursor-pointer"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -76,7 +79,7 @@ const Navbar = () => {
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-
+            {/* Desktop auth buttons */}
             <div className="hidden md:flex gap-2">
               <SignInButton>
                 <Button variant={"outline"} size={"sm"}>
@@ -88,13 +91,20 @@ const Navbar = () => {
               </SignUpButton>
             </div>
           </SignedOut>
+          
           <SignedIn>
+            <Link
+              href="/projects"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+            >
+              Projects
+            </Link>
             <UserButton />
           </SignedIn>
         </div>
       </div>
 
-
+      {/* Mobile menu (signed-out only) */}
       <SignedOut>
         {mobileOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-border/30 pt-4 animate-fade-in-up">
