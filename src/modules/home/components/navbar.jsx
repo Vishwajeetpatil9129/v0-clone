@@ -43,12 +43,12 @@ const Navbar = () => {
         <Link href={"/"} className="flex items-center gap-2.5">
           <Image
             src={"/logo.svg"}
-            alt="Vibe"
+            alt="Omnix"
             width={32}
             height={32}
             className="shrink-0 invert dark:invert-0"
           />
-          <span className="font-bold text-lg hidden sm:inline">Vibe</span>
+          <span className="font-bold text-lg hidden sm:inline">Omnix</span>
         </Link>
 
         {/* Desktop Nav Links (visible to signed-out users) */}

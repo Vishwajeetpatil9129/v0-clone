@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Vibe — Build Apps with AI",
+  title: "Omnix — Build Apps with AI",
   description: "Turn your ideas into working applications through conversation with AI. Describe what you want, get production-ready code instantly.",
 };
 

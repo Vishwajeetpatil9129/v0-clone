@@ -26,7 +26,7 @@ const PROJECT_TEMPLATES = [
   {
     emoji: "🌐",
     title: "Build a landing page",
-    prompt: "SaaS landing page with hero section, 3 feature cards, testimonials, and footer. Clean gradient background with dark mode support.",
+    prompt: "SaaS landing page with hero section, 3 feature cards, testimonials, and footer.",
   },
   {
     emoji: "🧮",
@@ -36,7 +36,7 @@ const PROJECT_TEMPLATES = [
   {
     emoji: "✅",
     title: "Build a todo list",
-    prompt: "Todo app with add, complete, and delete. All / Active / Completed filter tabs, fade animations, minimal card layout.",
+    prompt: "Todo app with add, complete, and delete. All / Active / Completed filter tabs, minimal card layout.",
   },
   {
     emoji: "⏱️",
@@ -46,17 +46,17 @@ const PROJECT_TEMPLATES = [
   {
     emoji: "🌤️",
     title: "Build a weather card",
-    prompt: "Weather UI with mock data — temperature, condition, humidity, wind, 5-day forecast. Glassmorphism card with dynamic sky gradient.",
+    prompt: "Weather UI with mock data — temperature, condition, humidity, wind, 5-day forecast.",
   },
   {
     emoji: "💸",
     title: "Build an expense tracker",
-    prompt: "Expense tracker with name, amount, and category input. Total spent summary, category progress bars, scrollable transaction list.",
+    prompt: "Expense tracker with name, amount, and category input. Total spent summary, category progress bars.",
   },
   {
     emoji: "🎨",
     title: "Build a color palette generator",
-    prompt: "5-swatch palette generator. Lock individual colors, randomize the rest, copy hex codes. Smooth color transition animations.",
+    prompt: "5-swatch palette generator. Lock individual colors, randomize the rest, copy hex codes.",
   },
   {
     emoji: "📝",
@@ -98,7 +98,7 @@ const ProjectsForm = () => {
 
   return (
     <div className="space-y-6 w-full">
-      {/* Template Grid */}
+
       
       <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {PROJECT_TEMPLATES.map((template, index) => (

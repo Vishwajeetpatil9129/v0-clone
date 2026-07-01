@@ -106,7 +106,7 @@ function HeroSection() {
             </div>
             <div className="flex-1 flex justify-center">
               <div className="px-4 py-1 rounded-md bg-zinc-200/60 dark:bg-zinc-800 text-xs text-muted-foreground font-mono">
-                vibe.dev
+                omnix.dev
               </div>
             </div>
           </div>
@@ -544,8 +544,8 @@ function Footer() {
 
           <div className="md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <Image src="/logo.svg" width={28} height={28} alt="Vibe" className="invert dark:invert-0" />
-              <span className="text-lg font-bold">Vibe</span>
+              <Image src="/logo.svg" width={28} height={28} alt="Omnix" className="invert dark:invert-0" />
+              <span className="text-lg font-bold">Omnix</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Build apps and websites through conversation with AI. Fast, intuitive, and free to start.
@@ -612,7 +612,7 @@ function Footer() {
 
         <div className="pt-8 border-t border-border/30 dark:border-zinc-800/40 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Vibe. All rights reserved.
+            © {new Date().getFullYear()} Omnix. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link href="#" className="text-muted-foreground/60 hover:text-emerald-500 transition-colors">
