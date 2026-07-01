@@ -5,6 +5,7 @@ import {
   ChevronDownIcon,
   ChevronLeftIcon,
   EditIcon,
+  FolderKanbanIcon,
   SunMoonIcon,
 } from "lucide-react";
 
@@ -43,7 +44,7 @@ const ProjectHeader = ({ projectId }) => {
           >
             <Image
               src={"/logo.svg"}
-              alt="Vibe"
+              alt="Omnix"
               width={28}
               height={28}
               className="shrink-0 invert dark:invert-0"
@@ -60,6 +61,12 @@ const ProjectHeader = ({ projectId }) => {
             <Link href={"/"}>
               <ChevronLeftIcon className="size-4" />
               <span>Go to Dashboard</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={"/projects"}>
+              <FolderKanbanIcon className="size-4" />
+              <span>Go to Projects</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
