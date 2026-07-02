@@ -1,4 +1,4 @@
-name : v0-clone
+name : omnix
 
 services:
   db:
