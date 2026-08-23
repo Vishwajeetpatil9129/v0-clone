@@ -89,12 +89,11 @@ const ProjectView = ({ projectId }) => {
               className="flex-1 overflow-hidden"
             >
               {activeFragment ? (
-                <>
-                  <FragmentWeb data={activeFragment}/>
-                  <div className="flex items-center justify-center h-full">
-                    Preview coming soon
-                  </div>
-                </>
+                <FragmentWeb
+                  key={activeFragment.id}
+                  data={activeFragment}
+                  onViewCode={() => setTabState("code")}
+                />
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   Select a fragment to preview
@@ -108,12 +107,7 @@ const ProjectView = ({ projectId }) => {
               className="flex-1 overflow-hidden"
             >
               {activeFragment?.files ? (
-                <>
-                  <FileExplorer files={activeFragment.files}/>
-                  <div className="flex items-center justify-center h-full">
-                    Code viewer coming soon
-                  </div>
-                </>
+                <FileExplorer files={activeFragment.files}/>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   Select a fragment to view code
